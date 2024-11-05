@@ -3,5 +3,5 @@ export default function App() {
     <div>
       <h1 className="text-4xl font-semibold">AI Proctored Exam Web</h1>
     </div>
-  )
+  );
 }
