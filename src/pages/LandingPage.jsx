@@ -10,9 +10,8 @@ export default function LandingPage() {
   const generate_token = async () => {
     try {
       const res = await generateToken(dispatch);
-      console.log(res);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       navigation("/auth");
     }
   };

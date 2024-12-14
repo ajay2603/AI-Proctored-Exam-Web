@@ -31,14 +31,13 @@ function VerifyOTP({ details, setSIn, setVerificationDetails }) {
     const body = { ...formData, email };
     try {
       const res = await authPost("/auth/sign-up/verify-otp", body);
-      console.log(res);
       alert(res.data.message);
       setVerificationDetails(null);
       setSIn(true);
     } catch (err) {
       if (err.status === 404) alert("Error Connecting Server");
       else {
-        console.log(err);
+        console.error(err);
         alert(err.response.data.message);
       }
     }

@@ -18,7 +18,7 @@ export default function UserRoutes() {
         console.log("User Verified");
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         if (err.status == 401) {
           navigate(`/auth?redirect=${currentPath}`);
         } else {

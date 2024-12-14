@@ -11,7 +11,7 @@ export default async function generateToken(dispatch) {
         resolve(res);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         reject(err);
       });
   });

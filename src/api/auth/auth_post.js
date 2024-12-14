@@ -2,7 +2,7 @@ import axios from "axios";
 const server = import.meta.env.VITE_SERVER;
 
 export default async function authPost(path, body={}) {
-  console.log(server);
+  
   return new Promise((resolve, reject) => {
     axios
       .post(`${server}${path}`, body, { withCredentials: true })

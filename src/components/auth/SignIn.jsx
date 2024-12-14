@@ -20,10 +20,8 @@ export default function SignIn() {
     try {
       //add loading effect
       const res = await authPost("/auth/sign-in", formData);
-      console.log(res);
       const redirectPath = searchParams.get("redirect");
       if (redirectPath) {
-        console.log(redirectPath);
         location.replace(redirectPath);
       } else {
         navigate("/", { replace: true });
@@ -31,7 +29,7 @@ export default function SignIn() {
     } catch (err) {
       if (err.status === 404) alert("Error Connecting Server");
       else {
-        console.log(err);
+        console.error(err);
         alert(err.data.message);
       }
     } finally {

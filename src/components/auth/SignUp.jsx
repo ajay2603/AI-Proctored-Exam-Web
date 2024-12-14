@@ -12,12 +12,11 @@ const SignUpForm = ({ setVerificationDetails }) => {
       //add loading effect
       const res = await authPost("/auth/sign-up", formData);
       const data = res.data;
-      console.log(data);
       setVerificationDetails(data);
     } catch (err) {
       if (err.status === 404) alert("Error Connecting Server");
       else {
-        console.log(err);
+        console.error(err);
         alert(err.response.data.message);
       }
     } finally {
