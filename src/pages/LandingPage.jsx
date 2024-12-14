@@ -3,7 +3,7 @@ import generateToken from "../api/auth/generate_token";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function Root() {
+export default function LandingPage() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
@@ -11,7 +11,6 @@ export default function Root() {
     try {
       const res = await generateToken(dispatch);
       console.log(res);
-      navigation("/home");
     } catch (err) {
       console.log(err);
       navigation("/auth");
@@ -22,5 +21,5 @@ export default function Root() {
     generate_token();
   }, []);
 
-  return <h1>Root</h1>;
+  return <h1>Landing Page</h1>;
 }

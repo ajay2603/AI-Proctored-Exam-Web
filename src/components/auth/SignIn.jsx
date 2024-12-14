@@ -1,9 +1,11 @@
 import { useState } from "react";
 import authPost from "../../api/auth/auth_post";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export default function SignIn() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [loginForm, setLoginForm] = useState({
     email: "",
@@ -19,12 +21,18 @@ export default function SignIn() {
       //add loading effect
       const res = await authPost("/auth/sign-in", formData);
       console.log(res);
-      navigation("/home", { replace: true });
+      const redirectPath = searchParams.get("redirect");
+      if (redirectPath) {
+        console.log(redirectPath);
+        location.replace(redirectPath);
+      } else {
+        navigate("/", { replace: true });
+      }
     } catch (err) {
       if (err.status === 404) alert("Error Connecting Server");
       else {
         console.log(err);
-        alert(err.response.data.message);
+        alert(err.data.message);
       }
     } finally {
       //remove loading effect
