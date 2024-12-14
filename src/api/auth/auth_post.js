@@ -10,7 +10,7 @@ export default async function authPost(path, body={}) {
         resolve(res);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         reject(err);
       });
   });

@@ -30,7 +30,7 @@ export default function SignIn() {
       if (err.status === 404) alert("Error Connecting Server");
       else {
         console.error(err);
-        alert(err.data.message);
+        alert(err.response.data.message);
       }
     } finally {
       //remove loading effect
