@@ -3,8 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import Home from "./Home";
-import LandingPage from "./LandingPage";
+import Home from "../pages/Home";
+import LandingPage from "../pages/LandingPage";
+import ExamRoutes from "./ExamRoutes";
 import generateToken from "../api/auth/generate_token";
 
 export default function UserRoutes() {
@@ -14,13 +15,13 @@ export default function UserRoutes() {
 
   useEffect(() => {
     const currentPath = location.pathname;
-    console.log(currentPath);
+
     if (currentPath == "/") {
       return;
     }
     generateToken(dispatch)
       .then((_) => {
-        console.log("User Verified");
+        /*any logic if needed */
       })
       .catch((err) => {
         console.error(err);
@@ -37,6 +38,7 @@ export default function UserRoutes() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/exams/*" element={<ExamRoutes />} />
     </Routes>
   );
 }
