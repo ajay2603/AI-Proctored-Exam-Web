@@ -10,7 +10,9 @@ export default function ExamEditor() {
   const { questions } = useContext(QuestionsContext);
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+    >
       {/* SplitPane component */}
       <SplitPane
         split="vertical" // Split direction: vertical
@@ -23,7 +25,12 @@ export default function ExamEditor() {
         }}
       >
         {/* Left Pane */}
-        <QuestionEditor />
+        <div
+          className="overflow-auto"
+          style={{ height: "100%", display: "flex", flexDirection: "column" }}
+        >
+          <QuestionEditor />
+        </div>
 
         {/* Right Pane */}
         <div style={{ padding: "1rem", backgroundColor: "#e0e0e0" }}>
