@@ -1,24 +1,54 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { QuestionsContext } from "../../providers/exam_questions";
 import QuestionText from "./QuestionText";
 import QuestionImage from "./QuestionImage";
 import OptionText from "./OptionText";
 import OptionImage from "./OptionImage";
+import authorizedPost from "../../api/authorized_post";
+import { useSelector, useDispatch } from "react-redux";
+
 
 export default function QuestionEditor() {
   const { questions, setQuestions } = useContext(QuestionsContext);
-
+  const accessToken = useSelector((state) => state.userToken.accessToken);
+  const dispatch = useDispatch();
+  const { id } = useParams();
   const [currentQuestion, setCurrentQuestion] = useState({
     question: [],
     option: [],
     answer: null,
   });
 
-  const handleRemoveContextQuestion = (index) => {
-    setCurrentQuestion({
-      ...currentQuestion,
-      question: currentQuestion.question.filter((_, i) => i !== index),
-    });
+  useEffect(() => {
+    console.log(currentQuestion);
+  }, [currentQuestion]);
+
+  const handleRemoveContext = (index, type, optionIndex = null) => {
+    if (type === "question") {
+      setCurrentQuestion((prev) => ({
+        ...prev,
+        question: prev.question.filter((_, i) => i !== index),
+      }));
+    } else if (type === "option" && optionIndex !== null) {
+      const updatedOptions = [...currentQuestion.option];
+      updatedOptions[optionIndex] = updatedOptions[optionIndex].filter(
+        (_, i) => i !== index
+      );
+
+      if (currentQuestion.answer === optionIndex) {
+        setCurrentQuestion({
+          ...currentQuestion,
+          option: updatedOptions,
+          answer: null, // Reset answer when the selected option is removed
+        });
+      } else {
+        setCurrentQuestion({
+          ...currentQuestion,
+          option: updatedOptions,
+        });
+      }
+    }
   };
 
   const handleAddContext = (e, type, optionIndex = null) => {
@@ -26,37 +56,31 @@ export default function QuestionEditor() {
 
     if (contextType === "text") {
       if (type === "question") {
-        setCurrentQuestion({
-          ...currentQuestion,
-          question: [
-            ...currentQuestion.question,
-            { type: "text", content: "" },
-          ],
-        });
+        setCurrentQuestion((prev) => ({
+          ...prev,
+          question: [...prev.question, { type: "text", content: "" }],
+        }));
       } else if (type === "option" && optionIndex !== null) {
         const updatedOptions = [...currentQuestion.option];
         updatedOptions[optionIndex].push({ type: "text", content: "" });
-        setCurrentQuestion({
-          ...currentQuestion,
+        setCurrentQuestion((prev) => ({
+          ...prev,
           option: updatedOptions,
-        });
+        }));
       }
     } else if (contextType === "image") {
       if (type === "question") {
-        setCurrentQuestion({
-          ...currentQuestion,
-          question: [
-            ...currentQuestion.question,
-            { type: "image", content: "" },
-          ],
-        });
+        setCurrentQuestion((prev) => ({
+          ...prev,
+          question: [...prev.question, { type: "image", content: "" }],
+        }));
       } else if (type === "option" && optionIndex !== null) {
         const updatedOptions = [...currentQuestion.option];
         updatedOptions[optionIndex].push({ type: "image", content: "" });
-        setCurrentQuestion({
-          ...currentQuestion,
+        setCurrentQuestion((prev) => ({
+          ...prev,
           option: updatedOptions,
-        });
+        }));
       }
     }
   };
@@ -85,38 +109,11 @@ export default function QuestionEditor() {
     }
   };
 
-  const handleRemoveContext = (index, type, optionIndex = null) => {
-    if (type === "question") {
-      setCurrentQuestion({
-        ...currentQuestion,
-        question: currentQuestion.question.filter((_, i) => i !== index),
-      });
-    } else if (type === "option" && optionIndex !== null) {
-      const updatedOptions = [...currentQuestion.option];
-      updatedOptions[optionIndex] = updatedOptions[optionIndex].filter(
-        (_, i) => i !== index
-      );
-
-      if (currentQuestion.answer === optionIndex) {
-        setCurrentQuestion({
-          ...currentQuestion,
-          option: updatedOptions,
-          answer: null, // Reset answer when the selected option is removed
-        });
-      } else {
-        setCurrentQuestion({
-          ...currentQuestion,
-          option: updatedOptions,
-        });
-      }
-    }
-  };
-
   const handleAddOption = () => {
-    setCurrentQuestion({
-      ...currentQuestion,
-      option: [...currentQuestion.option, [{ type: "text", content: "" }]],
-    });
+    setCurrentQuestion((prev) => ({
+      ...prev,
+      option: [...prev.option, [{ type: "text", content: "" }]],
+    }));
   };
 
   const handleRemoveOption = (index) => {
@@ -126,8 +123,24 @@ export default function QuestionEditor() {
     setCurrentQuestion({
       ...currentQuestion,
       option: updatedOptions,
-      answer: currentQuestion.answer === index ? null : currentQuestion.answer, // Reset answer if removed option is selected
+      answer: currentQuestion.answer === index ? null : currentQuestion.answer,
     });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      console.log("Submitting Question:", currentQuestion);
+      console.log("Exam ID:", id);
+      const response = await authorizedPost(
+        `/exam/create/${id}/question`,
+        currentQuestion,
+        accessToken,
+        dispatch
+      );
+      console.log("Question submitted successfully!", response);
+    } catch (error) {
+      console.error("Error submitting question:", error);
+    }
   };
 
   return (
@@ -155,8 +168,10 @@ export default function QuestionEditor() {
                 return (
                   <QuestionImage
                     key={index}
-                    index={index}
-                    removeContext={() => handleRemoveContext(index, "question")}
+                    questionIndex={index}
+                    removeQuestionImage={() =>
+                      handleRemoveContext(index, "question")
+                    }
                     content={context.content}
                     updateContent={(newContent) =>
                       updateContent(index, newContent, "question")
@@ -270,6 +285,14 @@ export default function QuestionEditor() {
             Add Option
           </button>
         </div>
+
+        {/* Submit Button */}
+        <button
+          className="w-full px-6 py-3 mt-6 text-white transition duration-150 bg-green-600 rounded-lg shadow-md focus:outline-none hover:bg-green-500 active:bg-green-700"
+          onClick={handleSubmit}
+        >
+          Submit Question
+        </button>
       </div>
     </div>
   );

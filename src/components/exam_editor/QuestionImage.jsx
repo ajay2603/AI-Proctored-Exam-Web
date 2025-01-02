@@ -1,29 +1,45 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import authorizedPost from "../../api/authorized_post.js";
 
-const QuestionImage = ({ index, removeContext, content, updateContent }) => {
-  const [image, setImage] = useState(content);
+const QuestionImage = ({
+  questionIndex,
+  removeQuestionImage,
+  content,
+  updateContent,
+}) => {
+  const [imageId, setImageId] = useState(content);
+  const accessToken = useSelector((state) => state.userToken.accessToken);
+  const dispatch = useDispatch();
 
-  const handleDrop = (e) => {
+  const handleDrop = async (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      updateContent(imageUrl);
+      const formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        // Send the file as FormData
+        const response = await authorizedPost(
+          "/drive/temp/upload",
+          formData,
+          accessToken,
+          dispatch
+        );
+
+        const data = response.data;
+        console.log(data);
+        setImageId(data.id);
+        updateContent(data.id);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
     }
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      updateContent(imageUrl);
-    }
   };
 
   return (
@@ -33,27 +49,30 @@ const QuestionImage = ({ index, removeContext, content, updateContent }) => {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        {image ? (
+        {imageId ? (
           <img
-            src={image}
+            src={`http://localhost:3000/drive/image/${imageId}`}
             alt="Uploaded"
             className="object-cover w-full h-full rounded-lg"
           />
         ) : (
-          <span className="text-gray-500">
-            Drag & Drop or Click to Upload Image
-          </span>
+          <span className="text-gray-500">Drag & Drop to Upload Image</span>
         )}
         <input
           type="file"
           accept="image/*"
           className="absolute inset-0 opacity-0 cursor-pointer"
-          onChange={handleFileChange}
+          onChange={(e) => {
+            handleDrop({
+              preventDefault: () => {},
+              dataTransfer: { files: e.target.files },
+            });
+          }}
         />
       </div>
       <span
         className="flex items-center justify-center w-8 h-8 text-white bg-red-600 rounded-full cursor-pointer"
-        onClick={removeContext}
+        onClick={removeQuestionImage}
       >
         X
       </span>
