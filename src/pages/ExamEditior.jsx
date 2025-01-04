@@ -3,7 +3,7 @@ import SplitPane from "react-split-pane";
 import { QuestionsContext } from "../providers/exam_questions";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
-import QuestionEditor from "../components/exam_editor/QuestionEditor";
+import QuestionEditor from "../components/exams/editor/QuestionEditor";
 
 export default function ExamEditor() {
   const { id } = useParams();

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import authorizedPost from "../../api/authorized_post.js";
+import authorizedPost from "../../../../api/authorized_post.js";
 
 const OptionImage = ({
   index,
