@@ -4,6 +4,7 @@ import { QuestionsContext } from "../providers/exam_questions";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import QuestionEditor from "../components/exams/editor/QuestionEditor";
+import QuestionPreview from "../components/exams/preview/QuestionPreview";
 
 export default function ExamEditor() {
   const { id } = useParams();
@@ -33,9 +34,11 @@ export default function ExamEditor() {
         </div>
 
         {/* Right Pane */}
-        <div style={{ padding: "1rem", backgroundColor: "#e0e0e0" }}>
-          <h2>Exam ID</h2>
-          <p>{id}</p>
+        <div
+          className="overflow-auto"
+          style={{ height: "100%", display: "flex", flexDirection: "column" }}
+        >
+          <QuestionPreview questions={questions}></QuestionPreview>
         </div>
       </SplitPane>
     </div>
