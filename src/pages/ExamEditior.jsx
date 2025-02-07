@@ -1,5 +1,5 @@
 import React from "react";
-import SplitPane from "react-split-pane";
+import Split from "react-split";
 import { QuestionsContext } from "../providers/exam_questions";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
@@ -11,36 +11,25 @@ export default function ExamEditor() {
   const { questions } = useContext(QuestionsContext);
 
   return (
-    <div
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
-    >
-      {/* SplitPane component */}
-      <SplitPane
-        split="vertical" // Split direction: vertical
-        minSize={200} // Minimum size of panes
-        defaultSize="50%" // Default split at 50%
-        resizerStyle={{
-          background: "#ccc",
-          cursor: "col-resize",
-          width: "4px",
-        }}
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* Split component */}
+      <Split
+        className="flex h-full"
+        sizes={[50, 50]} // Default sizes in percentage
+        minSize={200} // Minimum width of each pane
+        gutterSize={4} // Thickness of the resizer
+        direction="horizontal" // Horizontal split
       >
         {/* Left Pane */}
-        <div
-          className="overflow-auto"
-          style={{ height: "100%", display: "flex", flexDirection: "column" }}
-        >
+        <div className="flex flex-col h-full overflow-auto">
           <QuestionEditor />
         </div>
 
         {/* Right Pane */}
-        <div
-          className="overflow-auto"
-          style={{ height: "100%", display: "flex", flexDirection: "column" }}
-        >
-          <QuestionPreview questions={questions}></QuestionPreview>
+        <div className="flex flex-col h-full overflow-auto">
+          <QuestionPreview questions={questions} />
         </div>
-      </SplitPane>
+      </Split>
     </div>
   );
 }
