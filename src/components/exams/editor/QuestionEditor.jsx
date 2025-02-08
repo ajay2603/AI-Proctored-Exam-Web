@@ -7,15 +7,11 @@ import authorizedPost from "../../../api/authorized_post";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function QuestionEditor() {
-  const { questions, setQuestions } = useContext(QuestionsContext);
+  const { currentQuestion, setCurrentQuestion, fetchQuestions } =
+    useContext(QuestionsContext);
   const accessToken = useSelector((state) => state.userToken.accessToken);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [currentQuestion, setCurrentQuestion] = useState({
-    question: [],
-    option: [],
-    answer: null,
-  });
 
   useEffect(() => {
     console.log(currentQuestion);
@@ -31,6 +27,12 @@ export default function QuestionEditor() {
         accessToken,
         dispatch
       );
+      fetchQuestions();
+      setCurrentQuestion({
+        question: [],
+        option: [],
+        answer: null,
+      });
       console.log("Question submitted successfully!", response);
     } catch (error) {
       console.error("Error submitting question:", error);

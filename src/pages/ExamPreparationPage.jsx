@@ -35,7 +35,7 @@ const ExamPreparationPage = () => {
   };
 
   const handleDownloadApp = () => {
-    const downloadLink = "/desktop-1.0.0-setup.exe"; // Replace with actual download link
+    const downloadLink = "/desktop-setup.exe"; // Replace with actual download link
     window.open(downloadLink, "_blank");
   };
 
