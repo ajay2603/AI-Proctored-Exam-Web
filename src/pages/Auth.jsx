@@ -27,7 +27,7 @@ export default function Auth(props) {
         >
           <SignIn />
           <h1 className="text-lg font-medium text-center md:hidden logsupTxt">
-            New to Pigeon
+            New to AI-Exam
             <br />
             <label
               className="hover:text-[#493196] text-[#5e3df3] cursor-pointer"
@@ -85,7 +85,7 @@ export default function Auth(props) {
             }`}
           >
             <h1 className="logsupTxt text-white text-[35px] font-semibold text-center">
-              New to Pigeon
+              New to AI-Exam
             </h1>
             <img src={SignUpSymb} className=" h-1/2" />
             <div className="flex justify-center w-full">

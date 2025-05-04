@@ -9,7 +9,7 @@ const socket = io("http://localhost:5000", {});
 export const DesktopContext = createContext();
 
 export default function DesktopProvider({ children }) {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ODgwNDIzOC1mYmI3LTQ4MTktODAyMi1jMDQzZTYxZGE5ZGIiLCJleGFtSWQiOiIwZmVkMzQwZi1kZjY0LTQwYjUtODJjNC04NTg5NzAwZWZlNzciLCJpYXQiOjE3NDAzMTM5Nzd9.XBC2qxrO4Ik5I1ZuazY5i-evOH70axdqZy6Rg_d9U7Q");
   const [isValidToken, setIsValidToken] = useState(false);
   const [runningTokenValidation, setIsRunningTokenValidation] = useState(false);
   const [isServerRunning, setIsServerRunning] = useState(null);

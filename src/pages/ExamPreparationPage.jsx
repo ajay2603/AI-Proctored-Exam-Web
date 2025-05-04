@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import authorizedPost from "../api/authorized_post";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 const ExamPreparationPage = () => {
   const [examId, setExamId] = useState("");
+
+  useState(() => {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+
+    const examid = queryParams.get("id");
+    if (examid) {
+      setExamId(examid);
+    }
+  }, []);
 
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.userToken.accessToken);

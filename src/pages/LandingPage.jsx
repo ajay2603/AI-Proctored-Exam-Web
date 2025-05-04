@@ -1,3 +1,5 @@
 export default function LandingPage() {
-  return <h1>Landing Page</h1>;
+  return (
+    <iframe className="w-screen h-screen" src="/landingpage.html"></iframe>
+  );
 }

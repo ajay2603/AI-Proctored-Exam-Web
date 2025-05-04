@@ -1,7 +1,31 @@
 import React, { useState } from "react";
 import EditIcon from "../../../../public/pencil-svgrepo-com.svg";
 
-const QuestionPreview = ({ questions, onRefresh, onAddNew }) => {
+const QuestionPreview = ({ questions, questionId, onRefresh, onAddNew }) => {
+  
+  const [examLink, setExamLink] = useState("");
+
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  useState(() => {
+    const baseUrl = `${window.location.protocol}//${window.location.host}`;
+    console.log(baseUrl);
+    const examUrl = `${baseUrl}/exams/take?id=${questionId}`;
+    setExamLink(examUrl);
+  }, []);
+
+  const handleCopyLink = () => {
+    navigator.clipboard
+      .writeText(examLink)
+      .then(() => {
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 2000); // Reset after 2 seconds
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  };
+
   const handleImageClick = (url) => {
     // Open the image in a new floating browser window
     const newWindow = window.open(
@@ -16,6 +40,25 @@ const QuestionPreview = ({ questions, onRefresh, onAddNew }) => {
 
   return (
     <div className="flex flex-col items-center w-full p-6 bg-gray-100">
+      <div className="w-full p-4 mb-6 bg-white shadow rounded-xl">
+        <h3 className="mb-2 text-lg font-semibold text-gray-700">Exam Link:</h3>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={examLink}
+            readOnly
+            className="flex-1 p-2 border rounded-lg bg-gray-50"
+          />
+          <button
+            onClick={handleCopyLink}
+            className={`px-4 py-2 text-white rounded-lg transition-colors ${
+              copySuccess ? "bg-green-500" : "bg-blue-500 hover:bg-blue-600"
+            }`}
+          >
+            {copySuccess ? "Copied!" : "Copy to Clipboard"}
+          </button>
+        </div>
+      </div>
       {questions.map((question, questionIndex) => (
         <div
           key={question.id}

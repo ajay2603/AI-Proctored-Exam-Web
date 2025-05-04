@@ -41,7 +41,11 @@ export default function ExamEditor() {
           className="flex flex-col h-full"
           style={{ overflowY: "auto" }} // Independent scrolling
         >
-          <QuestionPreview questions={questions} onRefresh={handleRefresh} />
+          <QuestionPreview
+            questionId={id}
+            questions={questions}
+            onRefresh={handleRefresh}
+          />
         </div>
       </Split>
     </div>

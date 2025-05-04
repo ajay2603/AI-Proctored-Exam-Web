@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Powered Remote Exam Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="font-sans bg-gray-50">
+    <!-- Header -->
+    <header class="py-4 bg-white shadow-sm">
+        <div class="container px-4 mx-auto">
+            <h1 class="text-2xl font-bold text-gray-800">AI Powered Remote Exam Platform</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container px-4 py-8 mx-auto">
+        <!-- Hero Section -->
+        <section class="py-12 text-center">
+            <h2 class="mb-4 text-3xl font-bold text-gray-900">Prevent Cheating with AI Monitoring</h2>
+            <p class="max-w-2xl mx-auto mb-8 text-lg text-gray-600">
+                Our platform detects cheating through advanced AI technology that monitors exam-takers in real-time.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex justify-center gap-4 mb-12">
+                <a href="/exams/new"><button
+                        class="px-6 py-2 font-medium text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
+                        Create Exam
+                    </button></a>
+                <a href="/exams/take"><button
+                        class="px-6 py-2 font-medium text-blue-600 transition bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200">
+                        Take Exam
+                    </button></a>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="grid grid-cols-1 gap-8 py-8 md:grid-cols-2">
+            <div class="p-6 bg-white rounded-lg shadow">
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                </div>
+                <h3 class="mb-2 text-xl font-semibold text-gray-800">Face Detection</h3>
+                <p class="text-gray-600">
+                    Detects and counts the number of faces in frame to ensure only authorized test-takers are present
+                    during the exam.
+                </p>
+            </div>
+
+            <div class="p-6 bg-white rounded-lg shadow">
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </div>
+                <h3 class="mb-2 text-xl font-semibold text-gray-800">Gaze Tracking</h3>
+                <p class="text-gray-600">
+                    Monitors eye movement to detect when students look away from the screen, which may indicate use of
+                    unauthorized resources.
+                </p>
+            </div>
+
+            <div class="p-6 bg-white rounded-lg shadow">
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="mb-2 text-xl font-semibold text-gray-800">Face Position Direction</h3>
+                <p class="text-gray-600">
+                    Analyzes the direction the test-taker's face is pointing to identify suspicious head movements
+                    during the exam.
+                </p>
+            </div>
+
+            <div class="p-6 bg-white rounded-lg shadow">
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="mb-2 text-xl font-semibold text-gray-800">Face Recognition</h3>
+                <p class="text-gray-600">
+                    Verifies the identity of the test-taker throughout the exam to prevent impersonation or
+                    substitution.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+
+</html>
